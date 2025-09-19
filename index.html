@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Solicitud de Recogida de Residuos</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-100 min-h-screen flex items-center justify-center p-4">
+  <div class="bg-white shadow-2xl rounded-2xl p-8 w-full max-w-3xl">
+    <!-- Encabezado -->
+    <div class="flex justify-between items-center mb-6">
+      <h1 class="text-2xl font-bold text-green-600">SOLICITUD DE RECOGIDA DE RESIDUOS</h1>
+      <h1 class="text-2xl font-bold">NUTEVET, S.L.</h1>
+    </div>
+
+    <!-- Instrucciones -->
+    <p class="mb-4 text-gray-700">
+      Por favor, marque la casilla o casillas que se corresponden con los residuos que haya que recoger.
+      <strong>Si tiene dudas, lea la descripción de cada residuo</strong>.
+    </p>
+
+    <!-- Formulario -->
+    <form id="residuosForm" class="space-y-4">
+      <!-- Código cliente -->
+      <div>
+        <label for="codigo" class="block font-medium text-gray-700 mb-1">Código cliente</label>
+        <input type="text" id="codigo" name="codigo" maxlength="4" pattern="[0-9]{1,4}"
+               class="w-24 border-gray-300 rounded-lg shadow-sm focus:ring-green-500 focus:border-green-500" required>
+      </div>
+
+      <!-- Listado residuos -->
+      <div class="space-y-2">
+        <label class="block font-medium text-gray-700 mb-2">Seleccione los residuos:</label>
+        <div>
+          <input type="checkbox" id="r1" name="residuos" value="180202/180103 Agujas">
+          <label for="r1">180202/180103 Agujas (sólo se recoge si el contenedor está medio o más)</label>
+        </div>
+        <div>
+          <input type="checkbox" id="r2" name="residuos" value="180202 Vacunas caducadas">
+          <label for="r2">180202 Vacunas caducadas: son los frascos de las vacunas que tienen algo de contenido o están llenas y ha pasado la fecha de caducidad</label>
+        </div>
+        <div>
+          <input type="checkbox" id="r3" name="residuos" value="180208 Medicamentos caducados">
+          <label for="r3">180208 Medicamentos caducados: son los frascos de medicamentos que no sean vacunas que tengan algo de contenido o estén llenos y ha pasado la fecha de caducidad</label>
+        </div>
+        <div>
+          <input type="checkbox" id="r4" name="residuos" value="150110 P Envases de plástico">
+          <label for="r4">150110 P Envases de plástico: son los frascos de plástico de los medicamentos vacíos</label>
+        </div>
+        <div>
+          <input type="checkbox" id="r5" name="residuos" value="150110 V Envases de vidrio">
+          <label for="r5">150110 V Envases de vidrio: son los frascos de vidrio de los medicamentos vacíos</label>
+        </div>
+      </div>
+
+      <!-- Mensaje final -->
+      <p class="mt-4 text-gray-700">Muchas gracias por su colaboración.</p>
+
+      <!-- Botones -->
+      <div class="flex space-x-4 mt-6">
+        <button type="submit"
+                class="bg-green-600 text-white px-6 py-2 rounded-lg shadow hover:bg-green-700 transition">
+          ENVIAR
+        </button>
+        <button type="reset"
+                class="bg-gray-300 text-gray-800 px-6 py-2 rounded-lg shadow hover:bg-gray-400 transition">
+          LIMPIAR
+        </button>
+      </div>
+    </form>
+
+    <!-- Resumen (se muestra solo si WhatsApp no abre) -->
+    <div id="resumenContainer" class="hidden mt-6 p-4 border rounded-lg bg-gray-50">
+      <h2 class="font-bold mb-2 text-gray-700">Resumen de solicitud:</h2>
+      <pre id="resumenTexto" class="whitespace-pre-wrap text-gray-800"></pre>
+      <button id="copiarBtn"
+              class="mt-3 bg-blue-600 text-white px-4 py-2 rounded-lg shadow hover:bg-blue-700 transition">
+        Copiar
+      </button>
+    </div>
+  </div>
+
+  <script>
+    const form = document.getElementById('residuosForm');
+    const resumenContainer = document.getElementById('resumenContainer');
+    const resumenTexto = document.getElementById('resumenTexto');
+    const copiarBtn = document.getElementById('copiarBtn');
+
+    form.addEventListener('submit', function(e) {
+      e.preventDefault();
+
+      const codigo = document.getElementById('codigo').value;
+      const residuosSeleccionados = Array.from(document.querySelectorAll('input[name="residuos"]:checked'))
+                                         .map(cb => cb.value);
+
+      if (!codigo || residuosSeleccionados.length === 0) {
+        alert("Por favor, introduzca el código cliente y seleccione al menos un residuo.");
+        return;
+      }
+
+      // Formato del mensaje: cada residuo en una línea
+      const mensaje = `Código cliente: ${codigo}\nResiduos:\n${residuosSeleccionados.join("\n")}`;
+
+      // Enlace de WhatsApp
+      const telefono = "34671982445"; // Número en formato internacional
+      const url = `https://wa.me/${telefono}?text=${encodeURIComponent(mensaje)}`;
+
+      // Intentar abrir WhatsApp
+      window.open(url, "_blank");
+
+      // Mostrar resumen por si no abre
+      resumenTexto.textContent = mensaje;
+      resumenContainer.classList.remove('hidden');
+    });
+
+    copiarBtn.addEventListener('click', function() {
+      navigator.clipboard.writeText(resumenTexto.textContent)
+        .then(() => alert("Resumen copiado al portapapeles."))
+        .catch(() => alert("No se pudo copiar el resumen."));
+    });
+  </script>
+</body>
+</html>
+
+
