@@ -33,27 +33,41 @@
       <div class="space-y-2">
         <label class="block font-medium text-gray-700 mb-2">Seleccione los residuos:</label>
         <div>
-          <input type="checkbox" id="r1" name="residuos" value="180202/180103 Agujas">
-          <label for="r1">180202/180103 Agujas (sólo se recoge si el contenedor está medio o más)</label>
+          <input type="checkbox" id="r1" name="residuos" value="No recoger">
+          <label for="r1"><strong>No recoger</strong></label>
+        </div>  
+          <input type="checkbox" id="r2" name="residuos" value="180202/180103 Agujas">
+          <label for="r2"><strong>180202/180103 Agujas:</strong> (sólo se recoge si el contenedor está medio o más)</label>
         </div>
         <div>
-          <input type="checkbox" id="r2" name="residuos" value="180202 Vacunas caducadas">
-          <label for="r2">180202 Vacunas caducadas: son los frascos de las vacunas que tienen algo de contenido o están llenas y ha pasado la fecha de caducidad</label>
+          <input type="checkbox" id="r3" name="residuos" value="180202 Vacunas caducadas">
+          <label for="r3"><strong>180202 Vacunas caducadas:</strong> son los frascos de las vacunas que tienen algo de contenido o están llenas y ha pasado la fecha de caducidad</label>
         </div>
         <div>
-          <input type="checkbox" id="r3" name="residuos" value="180208 Medicamentos caducados">
-          <label for="r3">180208 Medicamentos caducados: son los frascos de medicamentos que no sean vacunas que tengan algo de contenido o estén llenos y ha pasado la fecha de caducidad</label>
+          <input type="checkbox" id="r4" name="residuos" value="180208 Medicamentos caducados">
+          <label for="r4"><strong>Medicamentos caducados:</strong> son los frascos de medicamentos que no sean vacunas que tengan algo de contenido o estén llenos y ha pasado la fecha de caducidad</label>
         </div>
         <div>
-          <input type="checkbox" id="r4" name="residuos" value="150110 P Envases de plástico">
-          <label for="r4">150110 P Envases de plástico: son los frascos de plástico de los medicamentos vacíos</label>
+          <input type="checkbox" id="r5" name="residuos" value="150110 P Envases de plástico">
+          <label for="r5"><strong>150110 P Envases de plástico:</strong> son los frascos de plástico de los medicamentos vacíos</label>
         </div>
         <div>
-          <input type="checkbox" id="r5" name="residuos" value="150110 V Envases de vidrio">
-          <label for="r5">150110 V Envases de vidrio: son los frascos de vidrio de los medicamentos vacíos</label>
+          <input type="checkbox" id="r6" name="residuos" value="150110 V Envases de vidrio">
+          <label for="r6"><strong>150110 V Envases de vidrio:</strong> son los frascos de vidrio de los medicamentos vacíos</label>
         </div>
-      </div>
-
+        <div>
+          <input type="checkbox" id="r7" name="residuos" value="160504 Aerosoles">
+          <label for="r7"><strong>160504 Aerosoles:</strong> son los frascos de vidrio de los medicamentos vacíos</label>
+        </div>
+        <div>
+          <input type="checkbox" id="r8" name="residuos" value="090101 Líquido revelado">
+          <label for="r8"><strong>090101 Líquido revelado:</strong> son los frascos de vidrio de los medicamentos vacíos</label>
+        </div>
+        <div>
+          <input type="checkbox" id="r9" name="residuos" value="090104 Líquido fijador">
+          <label for="r9"><strong>090104 Líquido fijador:</strong> son los frascos de vidrio de los medicamentos vacíos</label>
+        </div>
+     
       <!-- Mensaje final -->
       <p class="mt-4 text-gray-700">Muchas gracias por su colaboración.</p>
 
@@ -103,7 +117,7 @@
       const mensaje = `Código cliente: ${codigo}\nResiduos:\n${residuosSeleccionados.join("\n")}`;
 
       // Enlace de WhatsApp
-      const telefono = "34671982445"; // Número en formato internacional
+      const telefono = "34695190825"; // Número en formato internacional
       const url = `https://wa.me/${telefono}?text=${encodeURIComponent(mensaje)}`;
 
       // Intentar abrir WhatsApp
