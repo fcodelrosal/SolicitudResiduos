@@ -2,139 +2,194 @@
 <html lang="es">
 <head>
   <meta charset="UTF-8">
+  <title>Solicitud de recogida de residuos</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Solicitud de Recogida de Residuos</title>
   <script src="https://cdn.tailwindcss.com"></script>
 </head>
+
 <body class="bg-gray-100 min-h-screen flex items-center justify-center p-4">
-  <div class="bg-white shadow-2xl rounded-2xl p-8 w-full max-w-3xl">
-    <!-- Encabezado -->
-    <div class="flex justify-between items-center mb-6">
-      <h1 class="text-2xl font-bold text-green-600">SOLICITUD DE RECOGIDA DE RESIDUOS</h1>
-      <h1 class="text-2xl font-bold">NUTEVET, S.L.</h1>
-    </div>
 
-    <!-- Instrucciones -->
-    <p class="mb-4 text-gray-700">
-      Por favor, marque la casilla o casillas que se corresponden con los residuos que haya que recoger.
-      <strong>Si tiene dudas, lea la descripción de cada residuo</strong>.
-    </p>
+<div class="bg-white w-full max-w-3xl rounded-xl shadow-lg p-6">
 
-    <!-- Formulario -->
-    <form id="residuosForm" class="space-y-4">
-      <!-- Código cliente -->
-      <div>
-        <label for="codigo" class="block font-medium text-gray-700 mb-1">Código cliente</label>
-        <input type="text" id="codigo" name="codigo" maxlength="4" pattern="[0-9]{1,4}"
-               class="w-24 border-gray-300 rounded-lg shadow-sm focus:ring-green-500 focus:border-green-500" required>
-      </div>
-
-      <!-- Listado residuos -->
-      <div class="space-y-2">
-        <label class="block font-medium text-gray-700 mb-2">Seleccione los residuos:</label>
-        <div>
-          <input type="checkbox" id="r1" name="residuos" value="No recoger">
-          <label for="r1"><strong>No recoger</strong></label>
-        </div>  
-          <input type="checkbox" id="r2" name="residuos" value="180202/180103 Agujas">
-          <label for="r2"><strong>180202/180103 Agujas:</strong> (sólo se recoge si el contenedor está medio o más)</label>
-        </div>
-        <div>
-          <input type="checkbox" id="r3" name="residuos" value="180202 Vacunas caducadas">
-          <label for="r3"><strong>180202 Vacunas caducadas:</strong> son los frascos de las vacunas que tienen algo de contenido o están llenas y ha pasado la fecha de caducidad</label>
-        </div>
-        <div>
-          <input type="checkbox" id="r4" name="residuos" value="180208 Medicamentos caducados">
-          <label for="r4"><strong>Medicamentos caducados:</strong> son los frascos de medicamentos que no sean vacunas que tengan algo de contenido o estén llenos y ha pasado la fecha de caducidad</label>
-        </div>
-        <div>
-          <input type="checkbox" id="r5" name="residuos" value="150110 P Envases de plástico">
-          <label for="r5"><strong>150110 P Envases de plástico:</strong> son los frascos de plástico de los medicamentos vacíos</label>
-        </div>
-        <div>
-          <input type="checkbox" id="r6" name="residuos" value="150110 V Envases de vidrio">
-          <label for="r6"><strong>150110 V Envases de vidrio:</strong> son los frascos de vidrio de los medicamentos vacíos</label>
-        </div>
-        <div>
-          <input type="checkbox" id="r7" name="residuos" value="160504 Aerosoles">
-          <label for="r7"><strong>160504 Aerosoles:</strong> sólo se recogen si el contenedor está lleno</label>
-        </div>
-        <div>
-          <input type="checkbox" id="r8" name="residuos" value="090101 Líquido revelado">
-          <label for="r8"><strong>090101 Líquido revelado:</strong> sólo se recoge si la garrafa está llena</label>
-        </div>
-        <div>
-          <input type="checkbox" id="r9" name="residuos" value="090104 Líquido fijador">
-          <label for="r9"><strong>090104 Líquido fijador:</strong> sólo se recoge si la garrafa está llena</label>
-        </div>
-     
-      <!-- Mensaje final -->
-      <p class="mt-4 text-gray-700">Muchas gracias por su colaboración.</p>
-
-      <!-- Botones -->
-      <div class="flex space-x-4 mt-6">
-        <button type="submit"
-                class="bg-green-600 text-white px-6 py-2 rounded-lg shadow hover:bg-green-700 transition">
-          ENVIAR
-        </button>
-        <button type="reset"
-                class="bg-gray-300 text-gray-800 px-6 py-2 rounded-lg shadow hover:bg-gray-400 transition">
-          LIMPIAR
-        </button>
-      </div>
-    </form>
-
-    <!-- Resumen (se muestra solo si WhatsApp no abre) -->
-    <div id="resumenContainer" class="hidden mt-6 p-4 border rounded-lg bg-gray-50">
-      <h2 class="font-bold mb-2 text-gray-700">Resumen de solicitud:</h2>
-      <pre id="resumenTexto" class="whitespace-pre-wrap text-gray-800"></pre>
-      <button id="copiarBtn"
-              class="mt-3 bg-blue-600 text-white px-4 py-2 rounded-lg shadow hover:bg-blue-700 transition">
-        Copiar
-      </button>
-    </div>
+  <!-- CABECERA -->
+  <div class="flex justify-between items-center mb-4">
+    <div class="text-xl font-bold">SOLICITUD DE RECOGIDA DE RESIDUOS</div>
+    <div class="text-xl font-bold text-green-600">NUTEVET, S.L</div>
   </div>
 
-  <script>
-    const form = document.getElementById('residuosForm');
-    const resumenContainer = document.getElementById('resumenContainer');
-    const resumenTexto = document.getElementById('resumenTexto');
-    const copiarBtn = document.getElementById('copiarBtn');
+  <!-- TEXTO SOLO INICIAL -->
+  <p id="texto-inicial" class="mb-4">
+    Por favor, marque el grupo de residuos que genera o la opción NO RECOGER, en su caso.
+  </p>
 
-    form.addEventListener('submit', function(e) {
-      e.preventDefault();
+  <!-- DATOS -->
+  <div class="mb-3">
+    <label class="block font-semibold mb-1">NIF o CIF de la empresa:</label>
+    <input id="nif" type="text" class="w-full border rounded p-2">
+  </div>
 
-      const codigo = document.getElementById('codigo').value;
-      const residuosSeleccionados = Array.from(document.querySelectorAll('input[name="residuos"]:checked'))
-                                         .map(cb => cb.value);
+  <div class="mb-4">
+    <label class="block font-semibold mb-1">CCP (código de centro productor):</label>
+    <input id="ccp" type="text" class="w-full border rounded p-2">
+  </div>
 
-      if (!codigo || residuosSeleccionados.length === 0) {
-        alert("Por favor, introduzca el código cliente y seleccione al menos un residuo.");
-        return;
-      }
+  <!-- PANTALLA PRINCIPAL -->
+  <div id="pantalla-principal" class="flex flex-wrap gap-3 justify-center mb-6">
+    <button onclick="noRecoger()" class="bg-red-600 text-white px-4 py-2 rounded">NO RECOGER</button>
+    <button onclick="mostrarGrupo('ganaderia')" class="bg-blue-600 text-white px-4 py-2 rounded">GRUPO GANADERÍA</button>
+    <button onclick="mostrarGrupo('veterinaria')" class="bg-blue-600 text-white px-4 py-2 rounded">GRUPO VETERINARIA</button>
+    <button onclick="mostrarGrupo('humana')" class="bg-blue-600 text-white px-4 py-2 rounded">GRUPO HUMANA</button>
+  </div>
 
-      // Formato del mensaje: cada residuo en una línea
-      const mensaje = `Código cliente: ${codigo}\nResiduos:\n${residuosSeleccionados.join("\n")}`;
+  <!-- TEXTO SOLO INICIAL -->
+  <p id="texto-gracias" class="text-center">
+    Muchas gracias por su colaboración
+  </p>
 
-      // Enlace de WhatsApp
-      const telefono = "34695190825"; // Número en formato internacional
-      const url = `https://wa.me/${telefono}?text=${encodeURIComponent(mensaje)}`;
+  <!-- PANTALLA GRUPOS -->
+  <div id="pantalla-grupo" class="hidden">
 
-      // Intentar abrir WhatsApp
-      window.open(url, "_blank");
+    <p class="mb-4">
+      Por favor, marque los residuos a recoger.
+      <strong>Si tiene dudas lea la descripción de cada residuo</strong>
+    </p>
 
-      // Mostrar resumen por si no abre
-      resumenTexto.textContent = mensaje;
-      resumenContainer.classList.remove('hidden');
-    });
+    <div id="lista-residuos" class="space-y-3 mb-4"></div>
 
-    copiarBtn.addEventListener('click', function() {
-      navigator.clipboard.writeText(resumenTexto.textContent)
-        .then(() => alert("Resumen copiado al portapapeles."))
-        .catch(() => alert("No se pudo copiar el resumen."));
-    });
-  </script>
+    <div class="flex gap-3">
+      <button onclick="volver()" class="bg-gray-400 text-white px-4 py-2 rounded w-1/2">
+        Volver atrás
+      </button>
+      <button onclick="enviarGrupo()" class="bg-green-600 text-white px-4 py-2 rounded w-1/2">
+        ENVIAR
+      </button>
+    </div>
+
+  </div>
+
+  <!-- FORMULARIO OCULTO -->
+  <form id="formulario" method="POST" action="https://script.google.com/macros/s/AKfycbwZC338M9i-4f_m4AJ897fY5-sdHkkmD8jGNUc164VgiVRnGMiKJ8Uj4y6yEHJ8t17S/exec">
+    <input type="hidden" name="nif">
+    <input type="hidden" name="ccp">
+    <input type="hidden" name="fecha">
+    <input type="hidden" name="residuos">
+  </form>
+
+</div>
+
+<script>
+const esMovil = /Android|iPhone|iPad|iPod/i.test(navigator.userAgent);
+
+const residuos = {
+  ganaderia: [
+    { v:"180202 Agujas:", d:"sólo se recoge el contenedor si está medio o más.", h:true },
+    { v:"180202 Vacunas caducadas:", d:"son frascos de vacunas que tienen algo de contenido o están llenas y ha pasado la fecha de caducidad.", h:true },
+    { v:"180208 Medicamentos caducados:", d:"son frascos de medicamentos, que no sean vacunas, que tengan algo de contenido o estén llenos y ha pasado la fecha de caducidad.", h:true },
+    { v:"150110 P:", d:"son los frascos de plástico vacíos (medicamentos y vacunas).", h:true },
+    { v:"150110 V:", d:"son los frascos de vidrio vacíos (medicamentos y vacunas).", h:true },
+    { v:"160504 Aerosoles:", d:"sólo se recogen si el contenedor está lleno y está contratado el servicio.", h:false }
+  ],
+  veterinaria: [
+    { v:"180202 Agujas:", d:"sólo se recoge el contenedor si está medio o más.", h:true },
+    { v:"180202 Vacunas caducadas:", d:"son los viales monodosis vacíos y los frascos de vacunas que tienen algo de contenido o están llenas y ha pasado la fecha de caducidad (veterinario de campo).", h:true },
+    { v:"180208 Medicamentos caducados:", d:"frascos vacíos de la clínica de pequeños y los frascos de medicamentos, que no sean vacunas, que tengan algo de contenido o estén llenos y ha pasado la fecha de caducidad (veterinario de campo).", h:true },
+    { v:"150110 P:", d:"son los frascos de plástico vacíos (medicamentos y vacunas). Contratado por algunos veterinarios de campo.", h:false },
+    { v:"150110 V:", d:"son los frascos de vidrio vacíos (medicamentos y vacunas). Contratado por algunos veterinarios de campo.", h:false },
+    { v:"090101 Líquido de revelado:", d:"sólo se recoge si la garrafa está llena.", h:false },
+    { v:"090104 Líquido fijador:", d:"sólo se recoge si la garrafa está llena.", h:false }
+  ],
+  humana: [
+    { v:"180103 Agujas:", d:"sólo se recoge el contenedor si está lleno o más.", h:true },
+    { v:"180103 Otros:", d:"contenedor negro. Se recoge cuando está lleno (guantes, mascarillas, gasas, algodones, ampollas...)", h:false },
+    { v:"090101 Líquido de revelado:", d:"sólo se recoge si la garrafa está llena.", h:false },
+    { v:"090104 Líquido fijador:", d:"sólo se recoge si la garrafa está llena.", h:false }
+  ]
+};
+
+function validar() {
+  if (!nif.value.trim()) {
+    alert("Debe rellenar el NIF o CIF.");
+    return false;
+  }
+  return true;
+}
+
+function mostrarGrupo(grupo) {
+  if (!validar()) return;
+
+  document.getElementById("pantalla-principal").classList.add("hidden");
+  document.getElementById("texto-inicial").classList.add("hidden");
+  document.getElementById("texto-gracias").classList.add("hidden");
+  document.getElementById("pantalla-grupo").classList.remove("hidden");
+
+  const contenedor = document.getElementById("lista-residuos");
+  contenedor.innerHTML = "";
+
+  residuos[grupo].forEach(r => {
+    contenedor.innerHTML += `
+      <label class="block p-3 border rounded ${r.h ? 'bg-green-50 border-green-400' : ''}">
+        <div class="flex gap-2">
+          <input type="checkbox" value="${r.v}">
+          <div>
+            <strong>${r.v}</strong>
+            ${r.h ? '<div class="text-xs text-green-700">Residuo habitual</div>' : ''}
+            <div class="text-sm text-gray-600">${r.d}</div>
+          </div>
+        </div>
+      </label>`;
+  });
+}
+
+function volver() {
+  document.getElementById("pantalla-grupo").classList.add("hidden");
+  document.getElementById("pantalla-principal").classList.remove("hidden");
+  document.getElementById("texto-inicial").classList.remove("hidden");
+  document.getElementById("texto-gracias").classList.remove("hidden");
+}
+
+function noRecoger() {
+  if (validar()) enviar(["NO RECOGER"]);
+}
+
+function enviarGrupo() {
+  const seleccionados = [...document.querySelectorAll("#lista-residuos input:checked")]
+    .map(c => c.value);
+
+  if (!seleccionados.length) {
+    alert("Debe marcar al menos un residuo.");
+    return;
+  }
+  enviar(seleccionados);
+}
+
+function enviar(residuosSeleccionados) {
+  const fecha = new Date().toLocaleDateString("es-ES");
+
+  formulario.nif.value = nif.value;
+  formulario.ccp.value = ccp.value;
+  formulario.fecha.value = fecha;
+  formulario.residuos.value = JSON.stringify(residuosSeleccionados);
+  formulario.submit();
+
+  const mensaje =
+`Solicitud de recogida de residuos
+NIF/CIF: ${nif.value}
+CCP: ${ccp.value}
+Fecha: ${fecha}
+Residuos:
+- ${residuosSeleccionados.join("\n- ")}`;
+
+  const url = esMovil
+    ? `https://wa.me/34695190825?text=${encodeURIComponent(mensaje)}`
+    : `https://web.whatsapp.com/send?phone=34695190825&text=${encodeURIComponent(mensaje)}`;
+
+  window.open(url, "_blank");
+}
+</script>
+
 </body>
 </html>
+
+
 
 
